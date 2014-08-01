@@ -7,7 +7,8 @@ if (isset($_GET['team'])) {
 	$sql1 = "SELECT name FROM ".$prefix."teams WHERE ids = '".$chosenTeamID."'";
 	$sql2 = mysql_query($sql1);
 	if (mysql_num_rows($sql2) == 0) {
-		$chosenTeam = $cookie_teamname;
+		unset($_GET['team']);
+        $chosenTeam = '';
 	}
 	else {
 		$sql3 = mysql_fetch_assoc($sql2);
@@ -20,9 +21,11 @@ else {
 }
 ?>
 <h1><?php echo __('Saison %d', GameTime::getSeason()); ?> - <?php echo __('Spiele von %s', $chosenTeam); ?></h1>
-<?php if ($loggedin == 1) { ?>
+<?php if ($loggedin == 1 || isset($_GET['team'])) { ?>
 <?php
-setTaskDone('team_calender');
+if ($loggedin == 1) {
+    setTaskDone('team_calender');
+}
 // TYPEN-FILTER ANFANG
 $filterSQL = "";
 $filterTyp = '';
@@ -35,7 +38,7 @@ if (isset($_GET['typ'])) {
 echo '<p style="text-align:right">';
 $standardLink = '<a href="/kalender.php?team='.$chosenTeamID.'&amp;typ=';
 echo $standardLink.'" class="pagenava'; if ($filterTyp == '') { echo ' aktiv'; } echo '">'._('Alle').'</a> '.$standardLink.'Cup" class="pagenava'; if ($filterTyp == 'Cup') { echo ' aktiv'; } echo '">'._('Cup').'</a> '.$standardLink.'Liga" class="pagenava'; if ($filterTyp == 'Liga') { echo ' aktiv'; } echo '">'._('Liga').'</a> '.$standardLink.'Pokal" class="pagenava'; if ($filterTyp == 'Pokal') { echo ' aktiv'; } echo '">'._('Pokal').'</a> '.$standardLink.'Test" class="pagenava'; if ($filterTyp == 'Test') { echo ' aktiv'; } echo '">'._('Test').'</a>';
-echo ' <a href="/team.php?id='.$chosenTeamID.'" class="pagenava">'.('Zum Teamprofil').'</a>';
+echo ' <a href="/team.php?id='.$chosenTeamID.'" class="pagenava">'._('Zum Teamprofil').'</a>';
 echo '</p>';
 // TYPEN FILTER ENDE
 ?>

@@ -49,7 +49,7 @@ if ($cookie_team != '__'.$cookie_id) {
 		addInfoBox(__('Die folgenden %1$s sind unvollständig: %2$s', '<a class="inText" href="/aufstellung.php">'._('Aufstellungen').'</a>', substr($unvollstaendigStr, 0, -2)));
 	}
 	if ($auslauf3 != 0) {
-		addInfoBox(__('In den nächsten drei Tagen laufen %s aus.', __('<a class="inText" href="/vertraege.php">%d Verträge</a>', $auslauf3)));
+		addInfoBox(__('In den nächsten drei Tagen laufen %s aus.', '<a class="inText" href="/vertraege.php">'.__('%d Verträge', $auslauf3).'</a>'));
 	}
 	if ($myteam3['sponsor'] == 0) {
 		addInfoBox(__('Du hast für die aktuelle Saison noch keinen Vertrag mit einem Sponsor abgeschlossen. %s', '<a class="inText" href="/sponsoren.php">'._('Klicke hier, um jetzt einen Vertrag abzuschließen.').'</a>'));
@@ -65,7 +65,7 @@ if ($cookie_team != '__'.$cookie_id) {
 	}
 	?>
 	<?php if (isMobile() && isset($nextGamesHTML)) { echo str_replace(' (<a href="/wio.php">WIO</a>)', '', $nextGamesHTML); } ?>
-	<h1>Dein Verein: <?php echo $cookie_teamname; ?></h1>
+	<h1><?php echo __('Dein Verein: %s', $cookie_teamname); ?></h1>
     <p style="float:left; text-align:left; margin-bottom:0;">
         <a class="pagenava" href="/freundeWerben.php"><?php echo _('Freunde einladen'); ?></a>
     </p>
@@ -94,7 +94,7 @@ if ($cookie_team != '__'.$cookie_id) {
 	<tr><td><?php echo _('Liga'); ?></td><td><?php echo $vd3['rank'].'. Platz'; ?></td></tr>
 	<tr class="odd"><td><?php echo _('Pokal'); ?></td><td><?php if ($vd3['pokalrunde'] == 0) { echo '-'; } else { echo pokalrunde_wort($vd3['pokalrunde']); } ?></td></tr>
 	<tr><td><?php echo _('Cup'); ?></td><td><?php if ($vd3['cuprunde'] == 0) { echo '-'; } else { echo cuprunde_wort($vd3['cuprunde']); } ?></td></tr>
-	<tr class="odd"><td><?php echo _('RKP'); ?></td><td><?php echo number_format($vd3['elo'], 0, ',', '.'); ?> Punkte</td></tr>
+	<tr class="odd"><td><?php echo _('RKP'); ?></td><td><?php echo __('%s Punkte', number_format($vd3['elo'], 0, ',', '.')); ?></td></tr>
 	<tr><td><?php echo _('Kontostand'); ?></td><td<?php if ($vd3['konto'] < 0) { echo ' style="color:red"'; } ?>><?php echo showKontostand($vd3['konto']); ?> €</td></tr>
 	<tr class="odd"><td><?php echo _('Einsatz in Auktionen'); ?></td><td><?php echo number_format($einsatzAuk, 0, ',', '.'); ?> €</td></tr>
 	<tr><td><?php echo _('Verfügbares Geld'); ?></td><td><?php echo showKontostand($verfuegbaresGeld); ?> €</td></tr>
@@ -103,13 +103,13 @@ if ($cookie_team != '__'.$cookie_id) {
 	<tr class="odd"><td><?php echo _('Jugendabteilung'); ?></td><td class="link"><a href="/kader.php#besetzung">
 		<?php
 		switch ($vd3['posToSearch']) {
-			case 'T': $posToSearch = 'Torwart'; break;
-			case 'A': $posToSearch = 'Abwehr'; break;
-			case 'M': $posToSearch = 'Mittelfeld'; break;
-			case 'S': $posToSearch = 'Sturm'; break;
+			case 'T': $posToSearch = _('Torwart'); break;
+			case 'A': $posToSearch = _('Abwehr'); break;
+			case 'M': $posToSearch = _('Mittelfeld'); break;
+			case 'S': $posToSearch = _('Sturm'); break;
 			default: $posToSearch = '?'; break;
 		}
-		echo $posToSearch.' gesucht';
+		echo __('%s gesucht', $posToSearch);
 		?>
 	</a></td></tr>
 	<?php
@@ -126,7 +126,7 @@ if ($cookie_team != '__'.$cookie_id) {
 		$nextYouth = _('in drei Tagen');
 		$nextYouthDay = 3;
 	}
-	echo '<tr><td>'._('Nächster Jugendspieler').'</td><td>'.$nextYouth.' (Spieltag '.$nextYouthDay.')</td></tr>';
+	echo '<tr><td>'._('Nächster Jugendspieler').'</td><td>'.$nextYouth.' ('.__('Spieltag %d', $nextYouthDay).')</td></tr>';
 	?>
 	<tr class="odd"><td><?php echo _('Testspiele'); ?></td><td class="link"><a href="/testspiele.php">
 		<?php
@@ -237,7 +237,7 @@ else {
 					// SPIELER VOM TRANSFERMARKT HOLEN ENDE
 					// WILLKOMMENS-POST SCHICKEN ANFANG
 					$willkommensText = 'Hallo '.$cookie_username.',<br /><br />herzlich willkommen bei '.CONFIG_SITE_NAME.'. Wir hoffen, du findest Dich hier schnell zurecht.<br />Damit Dir der Einstieg etwas leichter fällt, haben wir viele nützliche <a href="/tipps_des_tages.php">Tipps</a> gesammelt.<br />Wenn Du noch Fragen hast, helfen wir Dir auch gerne im <a href="/chat.php">Chat</a> oder in unserem <a href="/support.php">Support-Bereich</a> weiter.<br />Es wartet eine nette Community auf Dich :)<br /><br />Viel Spaß wünscht<br />'.CONFIG_SITE_NAME.'<br />'.CONFIG_SITE_DOMAIN;
-					$sql1 = "INSERT INTO ".$prefix."pn (von, an, titel, inhalt, zeit, in_reply_to) VALUES ('".OFFICIAL_USER_ID."', '".$cookie_id."', 'Willkommen bei '.CONFIG_SITE_NAME, '".$willkommensText."', '".time()."', '')";
+					$sql1 = "INSERT INTO ".$prefix."pn (von, an, titel, inhalt, zeit, in_reply_to) VALUES ('".CONFIG_OFFICIAL_USER."', '".$cookie_id."', 'Willkommen bei '.CONFIG_SITE_NAME, '".$willkommensText."', '".time()."', '')";
 					$sql2 = mysql_query($sql1);
 					$sql1 = "UPDATE ".$prefix."pn SET ids = MD5(id) WHERE ids = ''";
 					$sql2 = mysql_query($sql1);

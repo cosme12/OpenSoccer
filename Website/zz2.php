@@ -20,7 +20,7 @@ function noDemoPopup() {
 <body>
 <div id="wrap">
 <div id="header">
-<div class="logo_top" style="position:relative"><img src="/images/logo-260x60.png" alt="<?php echo CONFIG_SITE_NAME; ?> - <?php echo _('Online-Fußball-Manager'); ?>" title="<?php echo CONFIG_SITE_NAME; ?> - <?php echo _('Online-Fußball-Manager'); ?>" width="260" style="border:0; width:260px; height:60px" />
+<div class="logo_top" style="position:relative"><img src="/images/logo.png" alt="<?php echo CONFIG_SITE_NAME; ?> - <?php echo _('Online-Fußball-Manager'); ?>" title="<?php echo CONFIG_SITE_NAME; ?> - <?php echo _('Online-Fußball-Manager'); ?>" width="224" style="border:0; width:224px; height:60px" />
 <?php
 $topWidget = '<h1>'._('Top-Manager').'</h1>';
 $topWidget .= '<div class="left-box navBlockLinks">';
@@ -196,20 +196,20 @@ if ($_SESSION['last_ligaTausch_check'] < $vor3Minuten) {
 		<li><a href="/ver_lotto.php"><?php echo _('Lotto'); ?></a></li>
 	</ul>
 </li><?php } ?>
-<?php if ($cookie_team != '__'.$cookie_id && !isMobile()) { ?><li class="menueintrag"<?php if ($_SERVER['SCRIPT_NAME'] == '/leihgaben.php' OR $_SERVER['SCRIPT_NAME'] == '/testspiele.php' OR $_SERVER['SCRIPT_NAME'] == '/ligaTausch.php') { echo ' id="current"'; } ?>><a href="/leihgaben.php">Anfragen (<?php echo intval($_SESSION['last_testspiele_anzahl']+$_SESSION['last_leihgaben_anzahl']+$_SESSION['last_ligaTausch_anzahl']); ?>)</a>
+<?php if ($cookie_team != '__'.$cookie_id && !isMobile()) { ?><li class="menueintrag"<?php if ($_SERVER['SCRIPT_NAME'] == '/leihgaben.php' OR $_SERVER['SCRIPT_NAME'] == '/testspiele.php' OR $_SERVER['SCRIPT_NAME'] == '/ligaTausch.php') { echo ' id="current"'; } ?>><a href="/leihgaben.php"><?php echo _('Anfragen'); ?> (<?php echo intval($_SESSION['last_testspiele_anzahl']+$_SESSION['last_leihgaben_anzahl']+$_SESSION['last_ligaTausch_anzahl']); ?>)</a>
 	<ul>
 		<li><a href="/leihgaben.php"><?php echo _('Leihgaben'); ?> (<?php echo $_SESSION['last_leihgaben_anzahl']; ?>)</a></li>
 		<li><a href="/testspiele.php"><?php echo _('Testspiele'); ?> (<?php echo $_SESSION['last_testspiele_anzahl']; ?>)</a></li>
 		<li><a href="/ligaTausch.php"><?php echo _('Ligatausch'); ?> (<?php echo $_SESSION['last_ligaTausch_anzahl']; ?>)</a></li>
 	</ul>
 </li><?php } ?>
-<?php if (!isMobile()) { ?><li class="menueintrag"<?php if (substr($_SERVER['SCRIPT_NAME'], 0, 8) == '/support' OR $_SERVER['SCRIPT_NAME'] == '/tipps_des_tages.php' OR $_SERVER['SCRIPT_NAME'] == '/regeln.php' OR $_SERVER['REQUEST_URI'] == ('/post_schreiben.php?id='.OFFICIAL_USER_ID)) { echo ' id="current"'; } ?>><a href="/support.php"><?php echo _('Support'); ?></a>
+<?php if (!isMobile()) { ?><li class="menueintrag"<?php if (substr($_SERVER['SCRIPT_NAME'], 0, 8) == '/support' OR $_SERVER['SCRIPT_NAME'] == '/tipps_des_tages.php' OR $_SERVER['SCRIPT_NAME'] == '/regeln.php' OR $_SERVER['REQUEST_URI'] == ('/post_schreiben.php?id='.CONFIG_OFFICIAL_USER)) { echo ' id="current"'; } ?>><a href="/support.php"><?php echo _('Support'); ?></a>
 	<ul>
 		<li><a href="/support.php"><?php echo _('Support'); ?></a></li>
 		<li><a href="/wio.php#teamList"><?php echo _('Post ans Team'); ?></a></li>
 		<li><a href="/tipps_des_tages.php"><?php echo _('Kurztipps'); ?></a></li>
 		<li><a href="/regeln.php"><?php echo _('Regeln'); ?></a></li>
-		<?php if ($cookie_username == 'Yazu7') { ?><li><a href="/forum.php"><?php echo _('Archiv'); ?></a></li><?php } ?>
+		<?php if ($_SESSION['status'] == 'Helfer' || $_SESSION['status'] == 'Admin') { ?><li><a href="/forum.php"><?php echo _('Archiv'); ?></a></li><?php } ?>
 	</ul>
 </li><?php } ?>
 <?php if (!isMobile()) { ?><li class="menueintrag"><a href="/<?php if ($_SESSION['pMaxGebot'] == 1) { echo 'logoutNewUser.php'; } else { echo 'logout.php'; } ?>"><?php echo _('Logout'); ?></a></li><?php } ?>

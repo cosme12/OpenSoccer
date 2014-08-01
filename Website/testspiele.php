@@ -4,7 +4,7 @@
 <?php if ($loggedin == 1) { ?>
 <?php
 require_once('./classes/Friendlies.php');
-if (isset($_GET['recall']) && $cookie_id != DEMO_USER_ID) {
+if (isset($_GET['recall']) && $cookie_id != CONFIG_DEMO_USER) {
 	$recall_team2 = mysql_real_escape_string(trim(strip_tags($_GET['recall'])));
 	$anfa = "DELETE FROM ".$prefix."testspiel_anfragen WHERE team1 = '".$cookie_team."' AND team2 = '".$recall_team2."'";
 	$anfb = mysql_query($anfa);
@@ -24,7 +24,7 @@ else {
 }
 // KONTOSTAND PRUEFEN ENDE
 // FESTLEGEN WAS GESUCHT WERDEN SOLL ANFANG
-if (isset($_POST['wantTests']) && $cookie_id != DEMO_USER_ID) {
+if (isset($_POST['wantTests']) && $cookie_id != CONFIG_DEMO_USER) {
 	$wantTests = intval($_POST['wantTests']);
 	if ($wantTests == 0 OR $wantTests == 1) {
 		$up1 = "UPDATE ".$prefix."teams SET wantTests = '".$wantTests."' WHERE ids = '".$cookie_team."'";
@@ -99,7 +99,7 @@ else {
 			}
 			else {
 				echo '<tr><td class="link"><a href="/team.php?id='.$an3['team1'].'">'.$an3['team1_name'].'</a></td><td>'.date('d.m.Y', $an3['datum']).'</td>';
-				echo '<td><form action="/testspiel_antworten.php" method="get" accept-charset="utf-8"><input type="hidden" name="id" value="'.$an3['team1'].'" /> <input type="submit" name="typ" value="'._('Annehmen').'"'.noDemoClick($cookie_id).' /> <input type="submit" name="typ" value="'._('Ablehnen').'"'.noDemoClick($cookie_id).' /></form></td>';
+				echo '<td><form action="/testspiel_antworten.php" method="get" accept-charset="utf-8"><input type="hidden" name="id" value="'.$an3['team1'].'" /> <button type="submit" name="typ" value="Annehmen"'.noDemoClick($cookie_id).'>'._('Annehmen').'</button> <button type="submit" name="typ" value="Ablehnen"'.noDemoClick($cookie_id).'>'._('Ablehnen').'</button></form></td>';
 				echo '</tr>';
 			}
 		}

@@ -55,7 +55,7 @@ if (isset($_GET['slide'])) {
 <?php } else { ?>
 <?php
 setTaskDone('league_standings');
-if (isset($_POST['nachricht']) && isset($_POST['liga']) && $cookie_id != DEMO_USER_ID) {
+if (isset($_POST['nachricht']) && isset($_POST['liga']) && $cookie_id != CONFIG_DEMO_USER) {
 	// CHAT-SPERREN ANFANG
 	$sql1 = "SELECT MAX(chatSperre) FROM ".$prefix."helferLog WHERE managerBestrafen = '".$cookie_id."'";
 	$sql2 = mysql_query($sql1);
@@ -279,11 +279,11 @@ echo '</table>';
 ?>
 <h1><?php echo _('Deine Nachricht'); ?></h1>
 <form action="/lig_tabelle.php" method="post" accept-charset="utf-8">
-<p><input type="text" name="nachricht" style="width:80%" /> <input type="hidden" name="liga" value="<?php echo $temp_liga; ?>" /><input type="submit" value="<?php echo _('Eintragen'); ?>"<?php echo noDemoClick($cookie_id); ?> /></p>
+<p><input type="text" name="nachricht" style="width:60%" /> <input type="hidden" name="liga" value="<?php echo $temp_liga; ?>" /><input type="submit" value="<?php echo _('Eintragen'); ?>"<?php echo noDemoClick($cookie_id); ?> /></p>
 </form>
 <h1><?php echo _('Manager-Talk'); ?></h1>
 <?php
-if (isset($_GET['delEntry']) && $cookie_id != DEMO_USER_ID) {
+if (isset($_GET['delEntry']) && $cookie_id != CONFIG_DEMO_USER) {
 	$delEntry = mysql_real_escape_string(trim(strip_tags($_GET['delEntry'])));
 	$addSql = " AND user = '".$cookie_id."'";
 	if ($_SESSION['status'] == 'Helfer' OR $_SESSION['status'] == 'Admin') { $addSql = ""; }
@@ -293,7 +293,7 @@ if (isset($_GET['delEntry']) && $cookie_id != DEMO_USER_ID) {
 $sql1 = "SELECT ".$prefix."chats.id, ".$prefix."chats.user, ".$prefix."chats.zeit, ".$prefix."chats.nachricht, ".$prefix."users.username FROM ".$prefix."chats JOIN ".$prefix."users ON ".$prefix."chats.user = ".$prefix."users.ids WHERE ".$prefix."chats.liga = '".$temp_liga."' ORDER BY ".$prefix."chats.zeit DESC LIMIT 0, 20";
 $sql2 = mysql_query($sql1);
 while ($sql3 = mysql_fetch_assoc($sql2)) {
-	echo '<p><b>'.displayUsername($sql3['username'], $sql3['user']).' schrieb am '.date('d.m.Y, H:i', $sql3['zeit']).':';
+	echo '<p><b>'.__('%1$s schrieb am %2$s:', displayUsername($sql3['username'], $sql3['user']), date('d.m.Y, H:i', $sql3['zeit']));
 	if ($sql3['user'] == $cookie_id OR $_SESSION['status'] == 'Helfer' OR $_SESSION['status'] == 'Admin') {
 		echo ' <a href="/lig_tabelle.php?liga='.mysql_real_escape_string($temp_liga).'&amp;delEntry='.$sql3['id'].'">'._('[Löschen]').'</a>';
 	}
