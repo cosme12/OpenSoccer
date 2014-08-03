@@ -47,7 +47,7 @@ $sql3 = mysql_fetch_assoc($sql2);
 </thead>
 <tbody>
 <?php
-if (isset($_GET['action'])) {
+if (isset($_GET['action']) && $loggedin == 1) {
 	if ($_GET['action'] == 'requestedFriendly') {
 		setTaskDone('arrange_friendly');
 	}
@@ -79,7 +79,7 @@ echo '<tr class="odd"><td>'._('Pokalsieg').'</td><td>'.$sql3['pokalsiege'].'x</t
 echo '<tr><td>'._('Cupsieg').'</td><td>'.$sql3['cupsiege'].'x</td></tr>';
 echo '<tr class="odd"><td>'._('RKP (Vorjahr)').'</td><td>'.__('%1$s (%2$s) Punkte', number_format($sql3['elo'], 0, ',', '.'), number_format($sql3['vorjahr_elo'], 0, ',', '.')).'</td></tr>';
 echo '<tr><td>'._('Testspiele').'</td><td>';
-if ($live_scoring_spieltyp_laeuft == 'Test') { echo '?'; } else { __('%1$s (%2$s Siege)', $sql3['friendlies_ges'], $sql3['friendlies']); }
+if ($live_scoring_spieltyp_laeuft == 'Test') { echo '?'; } else { echo __('%1$s (%2$s Siege)', $sql3['friendlies_ges'], $sql3['friendlies']); }
 echo '</td></tr>';
 echo '<tr class="odd"><td>'._('Stadion').'</td><td>'.__('%s Plätze', number_format($stadion3['plaetze'], 0, ',', '.')).'</td></tr>';
 ?>
@@ -156,10 +156,10 @@ while ($sql6 = mysql_fetch_assoc($sql5)) {
 		echo '&nbsp;';
 	}
 	elseif ($sql6['transfermarkt'] == 1) {
-		echo 'Kauf';
+		echo _('Kauf');
 	}
 	else {
-		echo 'Leihe';
+		echo _('Leihe');
 	}
 	echo '</td>';
 	echo '<td class="link"><a href="/spieler.php?id='.$sql6['ids'].'">'.$sql6['vorname'].' '.$sql6['nachname'].'</a></td><td>'.floor($sql6['wiealt']/365).'</td><td>'.number_format($sql6['staerke'], 1, ',', '.').' <span style="color:#999">('.number_format($schaetzungVomScout, 1, ',', '.').')</span></td><td>'.$sql6['frische'].'%</td>';
