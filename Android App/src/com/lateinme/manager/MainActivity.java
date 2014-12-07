@@ -1,5 +1,8 @@
 package com.lateinme.manager;
 
+import android.content.Context;
+import android.view.ViewConfiguration;
+import java.lang.reflect.Field;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -45,6 +48,8 @@ public class MainActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.activity_main);
+        forceOverflowMenu(this);
+
         CookieSyncManager.createInstance(this);
         CookieManager.getInstance().setAcceptCookie(true);
         mWebView = (WebView) findViewById(R.id.webview);
@@ -57,7 +62,7 @@ public class MainActivity extends Activity {
         	@Override
         	public boolean onJsAlert(WebView view, String url, String message, final JsResult result) {
 				AlertDialog.Builder reallyExit = new AlertDialog.Builder(MainActivity.this);
-				reallyExit.setTitle("Ballmanager");
+				reallyExit.setTitle(getString(R.string.app_name));
 				reallyExit.setMessage(message);
 				reallyExit.setNeutralButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
@@ -75,7 +80,7 @@ public class MainActivity extends Activity {
 			@Override
 			public boolean onJsConfirm(WebView view, String url, String message, final JsResult result) {
 				AlertDialog.Builder reallyExit = new AlertDialog.Builder(MainActivity.this);
-				reallyExit.setTitle("Ballmanager");
+				reallyExit.setTitle(getString(R.string.app_name));
 				reallyExit.setMessage(message);
 				reallyExit.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
@@ -102,25 +107,19 @@ public class MainActivity extends Activity {
 	        }
         });
         mWebView.setWebViewClient(new WebViewClient() {
-        	@Override
-	        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-	        	if (url.startsWith("http://www.ballmanager.de") || url.startsWith("http://m.ballmanager.de")) {
-	        		return false;
-	        	}
-	        	else {
-	        		return true;
-	        	}
-	        }
+
 	        @Override
 	        public void onPageStarted(WebView view, String url, Bitmap favicon) {
 				progressBar.setVisibility(View.VISIBLE);
 				mWebView.setVisibility(View.GONE);
 	        }
+
 	        @Override
 			public void onPageFinished(WebView view, String url) {
 				progressBar.setVisibility(View.GONE);
 				mWebView.setVisibility(View.VISIBLE);
 			}
+
         });
         mWebView.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View v, MotionEvent event) {
@@ -135,7 +134,7 @@ public class MainActivity extends Activity {
                 return false;
 			}
         });
-        mWebView.loadUrl("http://m.ballmanager.de/?via_android=1");
+        mWebView.loadUrl("http://m.opensoccer.org/?via_android=1");
         if (android.os.Build.VERSION.SDK_INT < 11) {
         	Toast.makeText(this, getString(R.string.menu_hint), Toast.LENGTH_SHORT).show();
         }
@@ -155,7 +154,7 @@ public class MainActivity extends Activity {
 				if (dialog != null) {
 					dialog.dismiss();
 				}
-				mWebView.loadUrl("http://m.ballmanager.de"+urls[which]);
+				mWebView.loadUrl("http://m.opensoccer.org"+urls[which]);
 			}
 		});
     	chooser.setNeutralButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -262,6 +261,18 @@ public class MainActivity extends Activity {
 			}
 			mAlertDialog = null;
 		}
+	}
+	
+	private static void forceOverflowMenu(Context context) {
+		try {
+			ViewConfiguration config = ViewConfiguration.get(context);
+			Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		}
+		catch (Exception e) { }
 	}
 
 }
