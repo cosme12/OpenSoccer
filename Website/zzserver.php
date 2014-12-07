@@ -15,7 +15,7 @@ include 'config.php';
 
 // connect to the database
 mysql_connect(CONFIG_DATABASE_HOST, CONFIG_DATABASE_USERNAME, CONFIG_DATABASE_PASSWORD) or die ('Falsche MySQL-Daten!');
-mysql_select_db(CONFIG_DATABASE_NAME) or die ('Datenbank existiert nicht! / Database doesnt exist!');
+mysql_select_db(CONFIG_DATABASE_NAME) or die ('Datenbank existiert nicht! / Database does not exist!');
 
 // ERROR REPORTING BEGIN
 error_reporting(E_ALL);
