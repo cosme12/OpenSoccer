@@ -40,7 +40,6 @@ VERSION: 1.0
 
 body {
 	background-color: #ccc;
-	/* background: #ccc url(/images/pattern1.png) fixed repeat; */
 	font: 70%/1.5em Verdana, Tahoma, Arial, sans-serif;
 	color: #333;
 	text-align: center;
@@ -197,21 +196,26 @@ form.search input.button {
 ********************************************/
 #wrap {
 	width: 820px;
-	background: #ccc url(/images/content.jpg) repeat-y center top;
-	margin: 0 auto;
+	background-color: #fff;
+	margin: 24px auto;
+	padding: 12px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 	text-align: left;
 }
 #content-wrap {
 	clear: both;
-	width: 760px;
+	width: 820px;
 	padding: 0;
 	margin: 0 auto;
 }
 #header {
 	width: 820px;
 	position: relative;
-	height: 106px;
-	background: #ccc url(/images/header.jpg) no-repeat center top;
+	background: -webkit-linear-gradient(to right, #467CD2, #2757A3);
+	background: -moz-linear-gradient(to right, #467CD2, #2757A3);
+	background: linear-gradient(to right, #467CD2, #2757A3);
 	padding: 0;
 	font-size: 14px;
 	color: #FFF;
@@ -241,8 +245,11 @@ form.search input.button {
 /* Menu */
 #menu {
 	clear: both;
-	margin: 0; padding: 0 40px 0 0;
-	background: url(/images/menu.jpg) repeat-y center top;
+	margin: 0;
+	padding: 0 8px;
+	background: -webkit-linear-gradient(to right, #82C13E, #63932F);
+	background: -moz-linear-gradient(to right, #82C13E, #63932F);
+	background: linear-gradient(to right, #82C13E, #63932F);
 	font: bold 12px/26px Verdana, Arial, Tahoma, Sans-serif;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
 	height: 26px;
@@ -362,7 +369,7 @@ form.search input.button {
 /* Footer */
 #footer {
 	color: #666666;
-	background: #ccc url(/images/footer.jpg) no-repeat center top;
+	background-color: #fff;
 	clear: both;
 	width: 820px;
 	height: 55px;
@@ -522,11 +529,8 @@ tfoot th em {
 }
 
 .logo_top {
-	position: absolute;
 	margin: 0px;
 	padding: 0px;
-	top: 36px;
-	left: 50px
 }
 .balken_rahmen {
   border: 1px solid #000;
@@ -696,6 +700,42 @@ input[type="submit"]:hover, a.button:hover {
 	background-image: -ms-linear-gradient(top, #eeeeee, #dddddd);
 	background-image: -o-linear-gradient(top, #eeeeee, #dddddd);
 	background-repeat: repeat-x;
+}
+
+@media (max-width: 879px) {
+	#wrap, #content-wrap, #header, #footer {
+		width: auto;
+		max-width: 820px;
+	}
+	#main {
+		float: none;
+		width: auto;
+	}
+	#sidebar {
+		float: none;
+		width: auto;
+	}
+	#menu {
+		overflow: hidden;
+	}
+	.infokasten {
+		width: 42%;
+	}
+	.balken_rahmen {
+		width: 12%;
+	}
+	.showInfoBox {
+		height: auto;
+	}
+	.showInfoBox a.closeLink:link, .showInfoBox a.closeLink:visited, .showInfoBox a.closeLink:hover, .showInfoBox a.closeLink:active {
+		position: relative;
+		top: auto;
+		right: 2px;
+		left: auto;
+		bottom: 2px;
+		display: block;
+		margin: 12px 0;
+	}
 }
 
 <?php ob_end_flush(); ?>

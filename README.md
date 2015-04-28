@@ -14,6 +14,18 @@ Online Soccer Manager
  5. Edit [Website/config.example.php](Website/config.example.php) so that it matches your installation and rename it to `Website/config.php`
  6. Set up all the cron jobs listed below
  7. Change the password for the default user with administrator rights (username: `Admin`, password: `admin`)
+ 8. Make sure that [GNU gettext](http://php.net/manual/de/book.gettext.php) is installed, e.g. on Ubuntu via
+
+    ```
+	sudo apt-get install gettext
+	apt-get install locales
+	```
+
+ 9. Make sure that the [Intl extension](http://php.net/manual/de/book.intl.php) is installed, e.g. on Ubuntu via
+
+    `sudo apt-get install php5-intl`
+
+ 10. Make sure the directory `cache` is writable
 
 ## Cron jobs
 
@@ -55,7 +67,7 @@ In order to provide translations for this project, please refer to our [document
 
 ## License
 
-All parts of this project, except for the folder `images` in folder `Website`, has been released under the following license.
+All parts of this project, except for the folder `Website/images`, have been released under the following license:
 
 ```
  Copyright (C) 2008-2014 www.delight.im <info@delight.im>
