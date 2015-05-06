@@ -1,37 +1,7 @@
 <?php include 'zz1.php'; ?>
 <title><?php echo _('Aufstellung'); ?> - <?php echo CONFIG_SITE_NAME; ?></title>
 <style type="text/css">
-<!--
-<?php if (isMobile()) { ?>
-select { width:120px; }
-.torwart { display: block; margin: 2px 0; }
-.abwehr1 { display: block; margin: 2px 0; }
-.abwehr2 { display: block; margin: 2px 0; }
-.abwehr3 { display: block; margin: 2px 0; }
-.abwehr4 { display: block; margin: 2px 0; }
-.mittelfeld1 { display: block; margin: 2px 0; }
-.mittelfeld2 { display: block; margin: 2px 0; }
-.mittelfeld3 { display: block; margin: 2px 0; }
-.mittelfeld4 { display: block; margin: 2px 0; }
-.sturm1 { display: block; margin: 2px 0; }
-.sturm2 { display: block; margin: 2px 0; }
-<?php } else { ?>
-.spielfeld { position:relative; left:0; top:0; width:522px; height:400px; background:white url(/images/fussballfeld.png) scroll no-repeat; color:#fff; font-weight:bold; z-index:1; }
-select { width:120px; }
-.torwart { position:absolute; left:201px; top:340px; }
-.abwehr1 { position:absolute; left:36px; top:230px; }
-.abwehr2 { position:absolute; left:136px; top:255px; }
-.abwehr3 { position:absolute; left:266px; top:255px; }
-.abwehr4 { position:absolute; left:366px; top:230px; }
-.mittelfeld1 { position:absolute; left:76px; top:135px; }
-.mittelfeld2 { position:absolute; left:136px; top:160px; }
-.mittelfeld3 { position:absolute; left:266px; top:160px; }
-.mittelfeld4 { position:absolute; left:326px; top:135px; }
-.sturm1 { position:absolute; left:136px; top:65px; }
-.sturm2 { position:absolute; left:266px; top:65px; }
-<?php } ?>
-.verletzter_spieler td, .verletzter_spieler td a { color: #ff0000; }
--->
+.os-player-row-injured td, .os-player-row-injured td a { color: #ff0000; }
 </style>
 <?php include 'zz2.php'; ?>
 <h1><?php echo _('Aufstellung'); ?></h1>
@@ -83,7 +53,7 @@ if (isset($_POST['farbeAufstellen'])) {
 	$farbeAufstellen = trim(strip_tags($_POST['farbeAufstellen']));
 	if ($farbeAufstellen == 'Blau' OR $farbeAufstellen == 'Gelb' OR $farbeAufstellen == 'Rot' OR $farbeAufstellen == 'Gruen' OR $farbeAufstellen == 'Pink' OR $farbeAufstellen == 'Aqua' OR $farbeAufstellen == 'Silber' OR $farbeAufstellen == 'Lila' OR $farbeAufstellen == 'Oliv') {
 		$aufstellungLog1 = "INSERT INTO ".$prefix."aufstellungLog (team, zeit, typ) VALUES ('".$cookie_team."', ".time().", '".$spieltypAufstellung."')";
-		$aufstellungLog2 = mysql_query($aufstellungLog1);		
+		$aufstellungLog2 = mysql_query($aufstellungLog1);
 		$scs1 = "UPDATE ".$prefix."spieler SET startelf_".$spieltypAufstellung." = 0 WHERE team = '".$cookie_team."'";
 		$scs2 = mysql_query($scs1);
 		$setColor1 = "SELECT a.ids, a.position FROM ".$prefix."spieler AS a JOIN ".$prefix."spieler_mark AS b ON a.ids = b.spieler WHERE a.team = '".$cookie_team."' AND b.team = '".$cookie_team."' AND b.farbe = '".$farbeAufstellen."' AND a.verletzung = 0";
@@ -104,11 +74,11 @@ if (isset($_POST['farbeAufstellen'])) {
 		}
 	}
 }
-// BERECHNUNG DER CSS-POSITION: (BREITE_SPIELFELD-(BREITE_SELECT_FELD*ANZAHL_SPIELER+10*(ANZAHL_SPIELER-1)))/2
+
 if (count($_POST) > 0) {
     if (count($_POST) == 11) {
 		$aufstellungLog1 = "INSERT INTO ".$prefix."aufstellungLog (team, zeit, typ) VALUES ('".$cookie_team."', ".time().", '".$spieltypAufstellung."')";
-		$aufstellungLog2 = mysql_query($aufstellungLog1);		
+		$aufstellungLog2 = mysql_query($aufstellungLog1);
 		$aufstellung_aktivieren0 = "UPDATE ".$prefix."spieler SET startelf_".$spieltypAufstellung." = 0 WHERE team = '".$cookie_team."'";
 		$aufstellung_aktivieren0 = mysql_query($aufstellung_aktivieren0);
 		for ($i = 1; $i <= 11; $i++) {
@@ -123,7 +93,7 @@ if (count($_POST) > 0) {
 		$aufstellungUebernehmen = mysql_real_escape_string(trim(strip_tags($_POST['aufstellungUebernehmen'])));
 		if ($aufstellungUebernehmen == 'Liga' OR $aufstellungUebernehmen == 'Pokal' OR $aufstellungUebernehmen == 'Cup' OR $aufstellungUebernehmen == 'Test') {
 			$aufstellungLog1 = "INSERT INTO ".$prefix."aufstellungLog (team, zeit, typ) VALUES ('".$cookie_team."', ".time().", '".$spieltypAufstellung."')";
-			$aufstellungLog2 = mysql_query($aufstellungLog1);					
+			$aufstellungLog2 = mysql_query($aufstellungLog1);
 			$aufstellungUebernehmen1 = "UPDATE ".$prefix."spieler SET startelf_".$spieltypAufstellung." = startelf_".$aufstellungUebernehmen." WHERE team = '".$cookie_team."'".$pokalNurFuerSQL;
 			$aufstellungUebernehmen2 = mysql_query($aufstellungUebernehmen1);
 		}
@@ -171,89 +141,89 @@ while ($gf3 = mysql_fetch_assoc($gf2)) {
 ?>
 <form action="/aufstellung.php?spieltypAufstellung=<?php echo $spieltypAufstellung; ?>" method="post" accept-charset="utf-8">
 <p><input type="submit" value="<?php echo _('Aufstellung speichern'); ?>"<?php echo noDemoClick($cookie_id); ?> /></p>
-<?php if (!isMobile()) { ?><div class="spielfeld"><?php } ?>
-<?php if (isMobile()) { ?><p><strong><?php echo _('Torwart:'); ?></strong></p><?php } ?>
-<select name="11" size="1" class="torwart">
-	<?php
-	foreach ($player_t as $player_ts) {
-		echo '<option value="'.$player_ts[0].'"'; if ($player_ts[2] == 11) { echo ' selected="selected"'; } echo '>'.$player_ts[1].'</option>';
-	}
-	?>
-</select>
-<?php if (isMobile()) { ?><p><strong><?php echo _('Abwehr:'); ?></strong></p><?php } ?>
-<select name="10" size="1" class="abwehr1">
-	<?php
-	foreach ($player_a as $player_as) {
-		echo '<option value="'.$player_as[0].'"'; if ($player_as[2] == 10) { echo ' selected="selected"'; } echo '>'.$player_as[1].'</option>';
-	}
-	?>
-</select>
-<select name="9" size="1" class="abwehr2">
-	<?php
-	foreach ($player_a as $player_as) {
-		echo '<option value="'.$player_as[0].'"'; if ($player_as[2] == 9) { echo ' selected="selected"'; } echo '>'.$player_as[1].'</option>';
-	}
-	?>
-</select>
-<select name="8" size="1" class="abwehr3">
-	<?php
-	foreach ($player_a as $player_as) {
-		echo '<option value="'.$player_as[0].'"'; if ($player_as[2] == 8) { echo ' selected="selected"'; } echo '>'.$player_as[1].'</option>';
-	}
-	?>
-</select>
-<select name="7" size="1" class="abwehr4">
-	<?php
-	foreach ($player_a as $player_as) {
-		echo '<option value="'.$player_as[0].'"'; if ($player_as[2] == 7) { echo ' selected="selected"'; } echo '>'.$player_as[1].'</option>';
-	}
-	?>
-</select>
-<?php if (isMobile()) { ?><p><strong><?php echo _('Mittelfeld:'); ?></strong></p><?php } ?>
-<select name="6" size="1" class="mittelfeld1">
-	<?php
-	foreach ($player_m as $player_ms) {
-		echo '<option value="'.$player_ms[0].'"'; if ($player_ms[2] == 6) { echo ' selected="selected"'; } echo '>'.$player_ms[1].'</option>';
-	}
-	?>
-</select>
-<select name="5" size="1" class="mittelfeld2">
-	<?php
-	foreach ($player_m as $player_ms) {
-		echo '<option value="'.$player_ms[0].'"'; if ($player_ms[2] == 5) { echo ' selected="selected"'; } echo '>'.$player_ms[1].'</option>';
-	}
-	?>
-</select>
-<select name="4" size="1" class="mittelfeld3">
-	<?php
-	foreach ($player_m as $player_ms) {
-		echo '<option value="'.$player_ms[0].'"'; if ($player_ms[2] == 4) { echo ' selected="selected"'; } echo '>'.$player_ms[1].'</option>';
-	}
-	?>
-</select>
-<select name="3" size="1" class="mittelfeld4">
-	<?php
-	foreach ($player_m as $player_ms) {
-		echo '<option value="'.$player_ms[0].'"'; if ($player_ms[2] == 3) { echo ' selected="selected"'; } echo '>'.$player_ms[1].'</option>';
-	}
-	?>
-</select>
-<?php if (isMobile()) { ?><p><strong><?php echo _('Sturm:'); ?></strong></p><?php } ?>
-<select name="2" size="1" class="sturm1">
-	<?php
-	foreach ($player_s as $player_ss) {
-		echo '<option value="'.$player_ss[0].'"'; if ($player_ss[2] == 2) { echo ' selected="selected"'; } echo '>'.$player_ss[1].'</option>';
-	}
-	?>
-</select>
-<select name="1" size="1" class="sturm2">
-	<?php
-	foreach ($player_s as $player_ss) {
-		echo '<option value="'.$player_ss[0].'"'; if ($player_ss[2] == 1) { echo ' selected="selected"'; } echo '>'.$player_ss[1].'</option>';
-	}
-	?>
-</select>
-<?php if (!isMobile()) { ?></div><?php } ?>
+<div class="os-lineup-field">
+    <div class="visible-mobile"><p><strong><?php echo _('Sturm:'); ?></strong></p></div>
+    <select name="2" size="1" class="os-lineup-player os-lineup-player-forward1">
+        <?php
+        foreach ($player_s as $player_ss) {
+            echo '<option value="'.$player_ss[0].'"'; if ($player_ss[2] == 2) { echo ' selected="selected"'; } echo '>'.$player_ss[1].'</option>';
+        }
+        ?>
+    </select>
+    <select name="1" size="1" class="os-lineup-player os-lineup-player-forward2">
+        <?php
+        foreach ($player_s as $player_ss) {
+            echo '<option value="'.$player_ss[0].'"'; if ($player_ss[2] == 1) { echo ' selected="selected"'; } echo '>'.$player_ss[1].'</option>';
+        }
+        ?>
+    </select>
+    <div class="visible-mobile"><p><strong><?php echo _('Mittelfeld:'); ?></strong></p></div>
+    <select name="6" size="1" class="os-lineup-player os-lineup-player-midfield1">
+        <?php
+        foreach ($player_m as $player_ms) {
+            echo '<option value="'.$player_ms[0].'"'; if ($player_ms[2] == 6) { echo ' selected="selected"'; } echo '>'.$player_ms[1].'</option>';
+        }
+        ?>
+    </select>
+    <select name="5" size="1" class="os-lineup-player os-lineup-player-midfield2">
+        <?php
+        foreach ($player_m as $player_ms) {
+            echo '<option value="'.$player_ms[0].'"'; if ($player_ms[2] == 5) { echo ' selected="selected"'; } echo '>'.$player_ms[1].'</option>';
+        }
+        ?>
+    </select>
+    <select name="4" size="1" class="os-lineup-player os-lineup-player-midfield3">
+        <?php
+        foreach ($player_m as $player_ms) {
+            echo '<option value="'.$player_ms[0].'"'; if ($player_ms[2] == 4) { echo ' selected="selected"'; } echo '>'.$player_ms[1].'</option>';
+        }
+        ?>
+    </select>
+    <select name="3" size="1" class="os-lineup-player os-lineup-player-midfield4">
+        <?php
+        foreach ($player_m as $player_ms) {
+            echo '<option value="'.$player_ms[0].'"'; if ($player_ms[2] == 3) { echo ' selected="selected"'; } echo '>'.$player_ms[1].'</option>';
+        }
+        ?>
+    </select>
+    <div class="visible-mobile"><p><strong><?php echo _('Abwehr:'); ?></strong></p></div>
+    <select name="10" size="1" class="os-lineup-player os-lineup-player-defender1">
+        <?php
+        foreach ($player_a as $player_as) {
+            echo '<option value="'.$player_as[0].'"'; if ($player_as[2] == 10) { echo ' selected="selected"'; } echo '>'.$player_as[1].'</option>';
+        }
+        ?>
+    </select>
+    <select name="9" size="1" class="os-lineup-player os-lineup-player-defender2">
+        <?php
+        foreach ($player_a as $player_as) {
+            echo '<option value="'.$player_as[0].'"'; if ($player_as[2] == 9) { echo ' selected="selected"'; } echo '>'.$player_as[1].'</option>';
+        }
+        ?>
+    </select>
+    <select name="8" size="1" class="os-lineup-player os-lineup-player-defender3">
+        <?php
+        foreach ($player_a as $player_as) {
+            echo '<option value="'.$player_as[0].'"'; if ($player_as[2] == 8) { echo ' selected="selected"'; } echo '>'.$player_as[1].'</option>';
+        }
+        ?>
+    </select>
+    <select name="7" size="1" class="os-lineup-player os-lineup-player-defender4">
+        <?php
+        foreach ($player_a as $player_as) {
+            echo '<option value="'.$player_as[0].'"'; if ($player_as[2] == 7) { echo ' selected="selected"'; } echo '>'.$player_as[1].'</option>';
+        }
+        ?>
+    </select>
+    <div class="visible-mobile"><p><strong><?php echo _('Torwart:'); ?></strong></p></div>
+    <select name="11" size="1" class="os-lineup-player os-lineup-player-goalkeeper">
+        <?php
+        foreach ($player_t as $player_ts) {
+            echo '<option value="'.$player_ts[0].'"'; if ($player_ts[2] == 11) { echo ' selected="selected"'; } echo '>'.$player_ts[1].'</option>';
+        }
+        ?>
+    </select>
+</div>
 </form>
 <form action="/aufstellung.php?spieltypAufstellung=<?php echo $spieltypAufstellung; ?>" method="post" accept-charset="utf-8">
 <p><select name="farbeAufstellen" size="1" style="width:200px">
@@ -317,10 +287,10 @@ while ($sql3 = mysql_fetch_assoc($sql2)) {
 	// FARBE ENDE
 	if ($sql3['startelfWert'] != 0) { $mark1 = '<strong>'; $mark2 = '</strong>'; } else { $mark1 = ''; $mark2 = ''; }
 	if ($counter % 2 == 0) {
-		if ($sql3['verletzung'] != 0) { echo '<tr class="verletzter_spieler">'; } else { echo '<tr>'; }
+		if ($sql3['verletzung'] != 0) { echo '<tr class="os-player-row-injured">'; } else { echo '<tr>'; }
 	}
 	else {
-		if ($sql3['verletzung'] != 0) { echo '<tr class="odd verletzter_spieler">'; } else { echo '<tr class="odd">'; }
+		if ($sql3['verletzung'] != 0) { echo '<tr class="odd os-player-row-injured">'; } else { echo '<tr class="odd">'; }
 	}
 	$schaetzungVomScout = schaetzungVomScout($cookie_team, $cookie_scout, $sql3['ids'], $sql3['talent'], $sql3['staerke'], $cookie_team);
 	echo '<td'.$farbcode.'>&nbsp;</td><td>'.$mark1.$sql3['position'].$mark2.'</td><td class="link">'.$mark1.'<a href="/spieler.php?id='.$sql3['ids'].'">'.$sql3['vorname'].' '.$sql3['nachname'].'</a>'.$mark2.'</td><td>'.$mark1.floor($sql3['wiealt']/365).$mark2.'</td><td>'.$mark1.number_format($sql3['staerke'], 1, ',', '.').' <span style="color:#999">('.number_format($schaetzungVomScout, 1, ',', '.').')</span>'.$mark2.'</td><td>'.$mark1;
