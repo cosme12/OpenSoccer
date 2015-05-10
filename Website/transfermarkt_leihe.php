@@ -194,7 +194,7 @@ else {
 		}
 		echo '<td>'.$leihprämie.'</td>';
 		// PRÄMIE ENDE
-		echo '<td>';
+		echo '<td class="link">';
         if ($loggedin != 1) {
             echo '&nbsp;'; // not signed in
         }
@@ -202,7 +202,7 @@ else {
 			echo '&nbsp;'; // eigener Spieler
 		}
 		elseif (in_array($sql3['ids'], $laufende_verhandlungen)) {
-			echo '<a href="/transfermarkt_leihe.php?id='.$sql3['ids'].'" onclick="return confirm(\''._('Bist Du sicher?').'\')">Zurückziehen</a>';
+			echo '<a href="/transfermarkt_leihe.php?id='.$sql3['ids'].'" onclick="return confirm(\''._('Bist Du sicher?').'\')">'._('Zurückziehen').'</a>';
 		}
 		elseif (in_array($sql3['team'], $multiListe)) {
 			echo '&nbsp;'; // Multi-Account
@@ -212,7 +212,7 @@ else {
 				echo '&nbsp;'; // 2-Transfers-Sperre
 			}
 			else {
-				echo '<a href="/transfermarkt_leihe.php?id='.$sql3['ids'].'&praemie='.$prämieInt.'" onclick="return'.noDemoClick($cookie_id, TRUE).' confirm(\''._('Bist Du sicher?').'\')">Anfragen</a>';
+				echo '<a href="/transfermarkt_leihe.php?id='.$sql3['ids'].'&praemie='.$prämieInt.'" onclick="return'.noDemoClick($cookie_id, TRUE).' confirm(\''._('Bist Du sicher?').'\')">'._('Anfragen').'</a>';
 			}
 		}
 		echo '</td></tr>';

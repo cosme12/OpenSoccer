@@ -43,27 +43,13 @@ function setTaskDone($shortName) {
 		$taskDone1 = "INSERT INTO ".$prefix."licenseTasks_Completed (user, task) VALUES ('".$cookie_id."', '".mysql_real_escape_string(trim($shortName))."')";
 		$taskDone2 = mysql_query($taskDone1);
 		if ($taskDone2 != FALSE) {
-			addInfoBox(__('Herzlichen Glückwunsch, Du hast gerade einen weiteren Teil deiner %1$s abgeschlossen!', '<a class="inText" href="/managerPruefung.php">'.('Manager-Prüfung').'</a>'));
+			addInfoBox(__('Herzlichen Glückwunsch, Du hast gerade einen weiteren Teil deiner %1$s abgeschlossen!', '<a class="inText" href="/managerPruefung.php">'._('Manager-Prüfung').'</a>'));
 			$getTaskMoney1 = "UPDATE ".$prefix."teams SET konto = konto+1000000 WHERE ids = '".$cookie_team."'";
 			mysql_query($getTaskMoney1);
 			$taskBuchung1 = "INSERT INTO ".$prefix."buchungen (team, verwendungszweck, betrag, zeit) VALUES ('".$cookie_team."', 'Manager-Prüfung', 1000000, ".time().")";
 			mysql_query($taskBuchung1);
 		}
 	}
-}
-function getSpecialOffer() {
-	$today = date('d.m');
-	$ostern = date('d.m', easter_date());
-	switch ($today) {
-		case '13.07': $reason = __('%s hat Geburtstag', CONFIG_SITE_NAME); break;
-		case '24.12': $reason = _('Es ist Weihnachten'); break;
-		case '01.01': $reason = _('Das neue Jahr hat begonnen'); break;
-		case '01.05': $reason = _('Es ist Maifeiertag'); break;
-		case '03.10': $reason = _('Es ist Tag der Deutschen Einheit'); break;
-		case $ostern: $reason = _('Es ist Ostern'); break;
-		default: return false;
-	}
-	return __('%1$s und deshalb darf jeder Manager kostenlos %2$s!', $reason, '<a class="inText" href="/ver_lotto.php">'._('Lotto spielen').'</a>');
 }
 // INFO-BOXEN-ARRAY ENDE
 ?>
@@ -74,15 +60,8 @@ function getSpecialOffer() {
 <meta http-equiv="content-language" content="de" />
 <meta http-equiv="content-script-type" content="text/javascript" />
 <meta http-equiv="content-style-type" content="text/css" />
-<?php
-if (isMobile()) {
-	echo '<meta name="robots" content="noindex,follow" />';
-}
-else {
-	echo '<meta name="robots" content="index,follow" />';
-}
-?>
-<link rel="stylesheet" href="/images/Refresh.php?v=234930" type="text/css" />
+<meta name="robots" content="index,follow" />
+<link rel="stylesheet" href="/images/Refresh.php?v=234935" type="text/css" />
 <script type="text/javascript" src="/js/drop_down.js"></script>
 <link rel="stylesheet" href="/css/drop_down.css" type="text/css" />
 <link rel="icon" type="image/png" href="/images/favicon.png" />

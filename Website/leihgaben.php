@@ -24,7 +24,7 @@ if ($_SESSION['transferGesperrt'] == TRUE) {
     addInfoBox(__('Du bist noch für den Transfermarkt %1$s. Wenn Dir unklar ist, warum, frage bitte ein %2$s.', '<a class="inText" href="/sanktionen.php">'._('gesperrt').'</a>', '<a class="inText" href="/post_schreiben.php?id=18a393b5e23e2b9b4da106b06d8235f3">'._('Team-Mitglied').'</a>'));
 }
 else {
-	echo '<h1>Erhaltene Anfragen</h1>';
+	echo '<h1>'._('Erhaltene Anfragen').'</h1>';
 	if (isset($_POST['spieler']) && isset($_POST['aktion']) && isset($_POST['besitzer'])) {
 		$ac_spieler = mysql_real_escape_string(trim(strip_tags($_POST['spieler'])));
 		$ac_besitzer = mysql_real_escape_string(trim(strip_tags($_POST['besitzer'])));
@@ -115,7 +115,7 @@ else {
 				}
 			}
 			echo '<tr><td class="link"><a href="/spieler.php?id='.$an3['spieler'].'">'.$an3['vorname'].' '.$an3['nachname'].'</a></td><td class="link"><a href="/team.php?id='.$an3['ids'].'">'.$an3['bieter'].'</a></td><td>'.number_format($an3['praemie'], 0, ',', '.').' €</td>';
-			echo '<td><form action="/leihgaben.php" method="POST" accept-charset="utf-8"><input type="hidden" name="spieler" value="'.$an3['spieler'].'" /><input type="hidden" name="bieter" value="'.$an3['bieter'].'" /><input type="hidden" name="praemie" value="'.$an3['praemie'].'" /><input type="submit" name="aktion" value="'._('Ja').'"'.noDemoClick($cookie_id).' />&nbsp;<input type="submit" name="aktion" value="'._('Nein').'"'.noDemoClick($cookie_id).' /></form></td>';
+			echo '<td><form action="/leihgaben.php" method="POST" accept-charset="utf-8"><input type="hidden" name="spieler" value="'.$an3['spieler'].'" /><input type="hidden" name="bieter" value="'.$an3['bieter'].'" /><input type="hidden" name="praemie" value="'.$an3['praemie'].'" /><button type="submit" name="aktion" value="Ja"'.noDemoClick($cookie_id).'>'._('Ja').'</button>&nbsp;<button type="submit" name="aktion" value="Nein"'.noDemoClick($cookie_id).'>'._('Nein').'</button></form></td>';
 		}
 		echo '</tbody></table></p>';
 		echo '<p><strong>'._('Hinweis:').'</strong> '._('Bei mehreren Anfragen für denselben Spieler sind die anfragenden Teams nach Kaderstärke sortiert. Das Angebot des schwächsten Teams steht oben.').'</p>';

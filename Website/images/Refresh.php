@@ -138,7 +138,7 @@ label {
 	font-weight:bold;
 	margin:2px 0;
 }
-input {
+input, button {
 	padding: 2px;
 	border: 1px solid #999;
 	font: normal normal normal 1em Verdana, sans-serif;
@@ -213,8 +213,8 @@ form.search input.button {
 #header {
 	width: 820px;
 	position: relative;
-	background: -webkit-linear-gradient(to right, #467CD2, #2757A3);
-	background: -moz-linear-gradient(to right, #467CD2, #2757A3);
+	background: -webkit-linear-gradient(left, #467CD2, #2757A3);
+	background: -moz-linear-gradient(left, #467CD2, #2757A3);
 	background: linear-gradient(to right, #467CD2, #2757A3);
 	padding: 0;
 	font-size: 14px;
@@ -247,8 +247,8 @@ form.search input.button {
 	clear: both;
 	margin: 0;
 	padding: 0 8px;
-	background: -webkit-linear-gradient(to right, #82C13E, #63932F);
-	background: -moz-linear-gradient(to right, #82C13E, #63932F);
+	background: -webkit-linear-gradient(left, #82C13E, #63932F);
+	background: -moz-linear-gradient(left, #82C13E, #63932F);
 	background: linear-gradient(to right, #82C13E, #63932F);
 	font: bold 12px/26px Verdana, Arial, Tahoma, Sans-serif;
 	text-shadow: 0 1px 1px rgba(0,0,0,0.5);
@@ -658,7 +658,7 @@ div#top_box_nav .lightgrey {
 div#top_box_nav .lightgrey:hover {
 	background-color: rgba(60,60,60,0.6);
 }
-input[type="submit"], a.button {
+input[type="submit"], a.button, button {
 	display: inline-block;
 	min-width: 10em;
 	width: auto;
@@ -666,16 +666,10 @@ input[type="submit"], a.button {
 	margin: 0;
 	padding: 3px 6px;
 	border: 1px solid #999;
-	background: #f3f3f3;
 	cursor: pointer;
-	background-color: #efefef;
-	background-image: linear-gradient(to bottom, #f3f3f3, #eeeeee);
-	background-image: -moz-linear-gradient(top, #f3f3f3, #eeeeee);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#f3f3f3), to(#eeeeee));
-	background-image: -webkit-linear-gradient(top, #f3f3f3, #eeeeee);
-	background-image: -ms-linear-gradient(top, #f3f3f3, #eeeeee);
-	background-image: -o-linear-gradient(top, #f3f3f3, #eeeeee);
-	background-repeat: repeat-x;
+    background: -webkit-linear-gradient(top, #f3f3f3, #eeeeee);
+	background: -moz-linear-gradient(top, #f3f3f3, #eeeeee);
+    background: linear-gradient(to bottom, #f3f3f3, #eeeeee);
 	color: #333;
 	text-align: center;
 	text-decoration: none;
@@ -689,17 +683,12 @@ input[type="submit"], a.button {
 	-o-transition: all 0.2s ease 0.1s;
 	-webkit-touch-callout: none;
 }
-input[type="submit"]:hover, a.button:hover {
+input[type="submit"]:hover, a.button:hover, button:hover {
 	border: 1px solid #666;
 	color: #333;
-	background-color: #e8e8e8;
-	background-image: linear-gradient(to bottom, #eeeeee, #dddddd);
-	background-image: -moz-linear-gradient(top, #eeeeee, #dddddd);
-	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#eeeeee), to(#dddddd));
-	background-image: -webkit-linear-gradient(top, #eeeeee, #dddddd);
-	background-image: -ms-linear-gradient(top, #eeeeee, #dddddd);
-	background-image: -o-linear-gradient(top, #eeeeee, #dddddd);
-	background-repeat: repeat-x;
+    background: -webkit-linear-gradient(top, #eeeeee, #dddddd);
+	background: -moz-linear-gradient(top, #eeeeee, #dddddd);
+    background: linear-gradient(to bottom, #eeeeee, #dddddd);
 }
 
 .os-lineup-field {
@@ -708,7 +697,7 @@ input[type="submit"]:hover, a.button:hover {
     top: 0;
     width: 100%;
     max-width: 522px;
-    height: 480px;
+    height: 400px;
     margin: 0 auto;
     background-image: url(fussballfeld.png);
     background-attachment: scroll;
@@ -770,17 +759,40 @@ input[type="submit"]:hover, a.button:hover {
 div.visible-mobile {
     display: none;
 }
+div#sidebar-expander {
+    display: none;
+    width: 100%;
+    background-color: #666;
+    padding: 4px 8px;
+    margin: 4px 0;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+div#sidebar-expander span {
+    display: block;
+    margin: 0 auto;
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+}
 
 @media (max-width: 879px) {
 	#wrap, #content-wrap, #header, #footer {
 		width: auto;
 		max-width: 820px;
 	}
+    #wrap {
+        margin-top: 0;
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+    }
 	#main {
 		float: none;
 		width: auto;
 	}
 	#sidebar {
+        display: none;
 		float: none;
 		width: auto;
 	}
@@ -806,6 +818,7 @@ div.visible-mobile {
 		margin: 12px 0;
 	}
     .os-lineup-field {
+        height: 520px;
         padding: 12px 0;
     }
     .os-lineup-player {
@@ -815,6 +828,9 @@ div.visible-mobile {
         margin: 8px auto;
     }
     div.visible-mobile {
+        display: block;
+    }
+    div#sidebar-expander {
         display: block;
     }
 }

@@ -116,7 +116,7 @@ if (isset($_POST['preis']) && $cookie_id != CONFIG_DEMO_USER) {
 	if (intval($_POST['preis']) > 19 && intval($_POST['preis']) < 71) {
         $sql1 = "UPDATE ".$prefix."stadien SET preis = ".intval($_POST['preis'])." WHERE team = '".$cookie_team."'";
         $sql2 = mysql_query($sql1);
-            $formulierung = _('Du hast die Ticketpreise für Dein Stadion auf %d € gesetzt.', intval($_POST['preis']));
+            $formulierung = __('Du hast die Ticketpreise für Dein Stadion auf %d € gesetzt.', intval($_POST['preis']));
             $sql7 = "INSERT INTO ".$prefix."protokoll (team, text, typ, zeit) VALUES ('".$cookie_team."', '".$formulierung."', 'Stadion', '".time()."')";
             $sql8 = mysql_query($sql7);
 			setTaskDone('ticket_prices');
@@ -202,7 +202,7 @@ for ($c = 5; $c >= 0; $c--) {
 		break;
 	}
 }
-echo '<img src="'.$selectedStadionPhoto[1].'" alt="Dein Stadion" title="Dein Stadion" width="540" style="display:block; width:540px; height:200px; border:0;" />';
+echo '<img src="'.$selectedStadionPhoto[1].'" alt="Dein Stadion" title="Dein Stadion" width="540" style="display:block; width:540px; height:auto; border:0; margin:10px auto; max-width:100%;" />';
 ?>
 <table>
 <thead>
